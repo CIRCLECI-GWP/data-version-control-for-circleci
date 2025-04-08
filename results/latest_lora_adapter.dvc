@@ -1,0 +1,6 @@
+outs:
+- md5: 871da3e98802d8beb975800df5b22822.dir
+  size: 1187048
+  nfiles: 3
+  hash: md5
+  path: latest_lora_adapter

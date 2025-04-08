@@ -1,0 +1,9 @@
+venv
+.env
+mlruns
+*.json
+.dvc/cache/
+.dvc/tmp/
+.dvc/locks/
+.dvc/plots/
+.dvc/config.local

@@ -1,0 +1,8 @@
+mlflow
+dvc-gdrive
+dvc
+datasets
+torch
+transformers
+peft
+huggingface_hub[hf_xet]
