@@ -55,6 +55,7 @@ jobs:
             git config --global user.email "iqbalarham43@gmail.com"
             git config --global user.name "Muhammad Arham"
             git commit -m "Update LORA Adapter Post Training"
+            git push -u ${GITHUB_REPO_URL} main
 
             if [ -f "/tmp/gdrive_credentials.json" ]; then
               rm /tmp/gdrive_credentials.json
