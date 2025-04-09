@@ -38,6 +38,13 @@ jobs:
               dvc remote modify storage gdrive_service_account_json_file_path /tmp/gdrive_credentials.json
             fi
       - run:
+          name: Train LoRA Adapter
+          command: |
+            python train.py \
+              --model_name << pipeline.parameters.model_name >> \
+              --dataset_name << pipeline.parameters.dataset_name >> \
+
+      - run:
           name: DVC Versioning with Secure Credentials
           command: |
             MODEL_NAME=$(echo << pipeline.parameters.model_name >> | tr '/' '-')

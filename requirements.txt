@@ -1,6 +1,5 @@
-mlflow
-dvc-gdrive
 dvc
+dvc-gdrive
 datasets
 torch
 transformers
