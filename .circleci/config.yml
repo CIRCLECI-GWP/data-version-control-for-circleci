@@ -10,20 +10,20 @@ parameters:
     type: string
     default: "karpathy/tiny_shakespeare"
   
-orbs:
-  python: circleci/python@2.1
-  
+# orbs:
+#   python: circleci/python@2.1
+
 jobs:
   train-and-version-lora:
     docker:
       - image: cimg/python:3.10
     steps:
       - checkout
-      - python/install-packages:
-          pkg-manager: pip
-          packages:
-            - dvc
-            - dvc-gdrive
+      # - python/install-packages:
+      #     pkg-manager: pip
+      #     packages:
+      #       - dvc
+      #       - dvc-gdrive
       - run:
           name: Setup Environment
           command: |
