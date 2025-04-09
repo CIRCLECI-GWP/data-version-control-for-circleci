@@ -1,0 +1,62 @@
+version: 2.1
+
+parameters:
+  model_name:
+    type: string
+    default: "gpt2"
+    description: "HuggingFace Model Path"
+  
+  dataset_name:
+    type: string
+    default: "karpathy/tiny_shakespeare"
+  
+
+jobs:
+  train-and-version-lora:
+    docker:
+      - image: cimg/python:3.10
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+          packages:
+            - dvc
+            - dvc-gdrive
+      - run:
+          name: Setup Environment
+          command: |
+            python -m venv venv
+            source ./venv/bin/activate
+            pip install -r requirements.txt
+      - run:
+          name: Setup DVC with Secure Credentials
+          command: |
+            dvc remote add -d storage gdrive://${GDRIVE_FOLDER_ID}
+            dvc remote modify storage gdrive_acknowledge_possible_loss true
+            if [ ! -z "${GDRIVE_CREDENTIALS_DATA}" ]; then
+              # Create credentials from environment variable
+              echo ${GDRIVE_CREDENTIALS_DATA} > /tmp/gdrive_credentials.json
+              dvc remote modify storage gdrive_use_service_account true
+              dvc remote modify storage gdrive_service_account_json_file_path /tmp/gdrive_credentials.json
+            fi
+      - run:
+          name: DVC Versioning with Secure Credentials
+          command: |
+            MODEL_NAME=$(echo << pipeline.parameters.model_name >> | tr '/' '-')
+            OUTPUT_DIR="./results/latest_lora_adapter"
+            dvc add OUTPUT_DIR
+            dvc push
+            git add results/latest_lora_adapter.dvc
+            git config --global user.email "iqbalarham43@gmail.com"
+            git config --global user.name "Muhammad Arham"
+            git commit -m "Update LORA Adapter Post Training"
+
+            if [ -f "/tmp/gdrive_credentials.json" ]; then
+              rm /tmp/gdrive_credentials.json
+            fi
+
+workflows:
+  train-workflow:
+    jobs:
+      - train-and-version-lora:
+          name: << pipeline.parameters.model_name >>-<< pipeline.parameters.run_name >>
