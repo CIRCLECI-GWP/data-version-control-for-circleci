@@ -31,7 +31,6 @@ jobs:
               echo "DVC already initialized"
             fi
             dvc remote add -d storage gdrive://${GDRIVE_FOLDER_ID}
-            dvc remote modify storage gdrive_acknowledge_possible_loss true
             if [ ! -z "${GDRIVE_CREDENTIALS_DATA}" ]; then
               # Create credentials from environment variable
               echo ${GDRIVE_CREDENTIALS_DATA} > /tmp/gdrive_credentials.json
