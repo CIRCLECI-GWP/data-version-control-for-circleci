@@ -59,4 +59,4 @@ workflows:
   train-workflow:
     jobs:
       - train-and-version-lora:
-          name: << pipeline.parameters.model_name >>-<< pipeline.parameters.run_name >>
+          name: << pipeline.parameters.model_name >>-<< pipeline.parameters.dataset_name >>
