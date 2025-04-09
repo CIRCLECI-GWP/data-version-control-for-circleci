@@ -10,7 +10,9 @@ parameters:
     type: string
     default: "karpathy/tiny_shakespeare"
   
-
+orbs:
+  python: circleci/python@2.1
+  
 jobs:
   train-and-version-lora:
     docker:
