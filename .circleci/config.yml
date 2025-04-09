@@ -20,20 +20,16 @@ jobs:
     steps:
       - checkout
       - python/install-packages:
-          args: dvc dvc-gdrive
           pkg-manager: pip
-
-      - run:
-          name: Setup Environment
-          command: |
-            python -m venv venv
-            source ./venv/bin/activate
-            pip install -r requirements.txt
 
       - run:
           name: Setup DVC with Secure Credentials
           command: |
-            dvc init
+            if [ ! -d ".dvc" ]; then
+              dvc init
+            else
+              echo "DVC already initialized"
+            fi
             dvc remote add -d storage gdrive://${GDRIVE_FOLDER_ID}
             dvc remote modify storage gdrive_acknowledge_possible_loss true
             if [ ! -z "${GDRIVE_CREDENTIALS_DATA}" ]; then
