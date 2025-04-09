@@ -10,8 +10,8 @@ parameters:
     type: string
     default: "karpathy/tiny_shakespeare"
   
-# orbs:
-#   python: circleci/python@2.1
+orbs:
+  python: circleci/python@3.0.0
 
 jobs:
   train-and-version-lora:
@@ -19,20 +19,21 @@ jobs:
       - image: cimg/python:3.10
     steps:
       - checkout
-      # - python/install-packages:
-      #     pkg-manager: pip
-      #     packages:
-      #       - dvc
-      #       - dvc-gdrive
+      - python/install-packages:
+          args: dvc dvc-gdrive
+          pkg-manager: pip
+
       - run:
           name: Setup Environment
           command: |
             python -m venv venv
             source ./venv/bin/activate
             pip install -r requirements.txt
+
       - run:
           name: Setup DVC with Secure Credentials
           command: |
+            dvc init
             dvc remote add -d storage gdrive://${GDRIVE_FOLDER_ID}
             dvc remote modify storage gdrive_acknowledge_possible_loss true
             if [ ! -z "${GDRIVE_CREDENTIALS_DATA}" ]; then
