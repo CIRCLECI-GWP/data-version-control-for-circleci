@@ -49,7 +49,7 @@ jobs:
           command: |
             MODEL_NAME=$(echo << pipeline.parameters.model_name >> | tr '/' '-')
             OUTPUT_DIR="./results/latest_lora_adapter"
-            dvc add OUTPUT_DIR
+            dvc add ${OUTPUT_DIR}
             dvc push
             git add results/latest_lora_adapter.dvc
             git config --global user.email "iqbalarham43@gmail.com"
