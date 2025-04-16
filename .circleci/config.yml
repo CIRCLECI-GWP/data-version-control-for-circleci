@@ -52,8 +52,8 @@ jobs:
             dvc add ${OUTPUT_DIR}
             dvc push
             git add results/latest_lora_adapter.dvc
-            git config --global user.email "iqbalarham43@gmail.com"
-            git config --global user.name "Muhammad Arham"
+            git config --global user.email ${GIT_CONFIG_EMAIL}
+            git config --global user.name ${GIT_CONFIG_USERNAME}
             git commit -m "Update LORA Adapter Post Training"
             git push -u ${GITHUB_REPO_URL} main
 
