@@ -54,7 +54,7 @@ jobs:
             git add results/latest_lora_adapter.dvc
             git config --global user.email ${GIT_CONFIG_EMAIL}
             git config --global user.name ${GIT_CONFIG_USERNAME}
-            git commit -m "Update LORA Adapter Post Training"
+            git commit -m "Update LORA Adapter Post Training [skip ci]"
             git push -u ${GITHUB_REPO_URL} main
 
             if [ -f "/tmp/gdrive_credentials.json" ]; then
